@@ -87,7 +87,6 @@ ol.rg li:before{content:counter(r);position:absolute;left:0;top:7px;width:22px;h
         <a class="cta hide" id="cta" target="_blank" rel="noopener">💬 Escolher meu número</a>
         <a class="cta alt" href="#numeros">Ver números</a>
         <a class="cta alt" href="#infos">Detalhes e regras</a>
-        <button type="button" class="cta alt" id="ver-moto">Ver moto</button>
       </div>
     </div>
     <img id="foto" class="hide" alt="Foto do prêmio">
@@ -129,7 +128,8 @@ ol.rg li:before{content:counter(r);position:absolute;left:0;top:7px;width:22px;h
   </div>
 
   <div class="info" id="infos">
-    <div class="card"><h2>🏍️ Sobre a moto</h2><ul class="ck" id="detalhes"></ul><img class="foto-moto" id="foto-moto" src="foto-moto.jpeg" width="1024" height="1536" alt="Foto da moto" loading="lazy" onerror="this.classList.add('hide')"></div>
+    <div class="card"><h2>🏍️ Sobre a moto</h2><ul class="ck" id="detalhes"></ul><img class="foto-moto" id="foto-moto" src="foto-moto.jpeg" width="1024" height="1536" alt="Foto da moto" loading="lazy" onerror="this.classList.add('hide');document.getElementById('ver-moto').classList.add('hide')">
+      <div style="text-align:center"><button type="button" class="cta alt" id="ver-moto" style="margin-top:10px">⛶ Ver em tela cheia</button></div></div>
     <div class="card" id="regras-card"><h2>📜 Regras do sorteio</h2><ol class="rg" id="regras"></ol>
       <div class="fed">📍 <b>Limite da entrega:</b> Belém e região, Moju e região, Bragança e região e Salinas e região.</div>
       <div class="fed" id="fed"></div>
