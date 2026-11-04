@@ -33,11 +33,11 @@ h2{font-size:1.05rem;margin:0 0 10px;color:var(--gold2)}
 button.cta{font:inherit;font-weight:700;cursor:pointer}
 @media(min-width:760px){.hero.img{grid-template-columns:1.2fr 1fr;align-items:center}}
 /* kpis */
-.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}.kpi:last-child{grid-column:1/-1}
 .kpi small{color:var(--mut);display:block;font-size:.8rem}.kpi b{font-size:1.35rem}
-@media(min-width:760px){.kpis{grid-template-columns:repeat(3,1fr)}.two,.info{grid-template-columns:1fr 1fr!important}.kpi b{font-size:1.6rem}}
-.two,.info{display:grid;grid-template-columns:1fr;gap:10px}
-.info{gap:14px;margin-top:14px}.col{display:grid;gap:14px;align-content:start}
+@media(min-width:760px){.kpis{grid-template-columns:repeat(5,1fr)}.kpi:last-child{grid-column:auto}.info{grid-template-columns:1fr 1fr!important}.prog{grid-template-columns:1.3fr 1fr}}
+.info{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;align-items:start}
+.prog{display:grid;grid-template-columns:1fr;gap:16px;align-items:center}
 .bar{height:20px;background:var(--bd);border-radius:99px;overflow:hidden;margin:14px 0 8px}
 .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;transition:width .8s}
 .big{font-size:2.2rem;font-weight:800;color:var(--gold2)}
@@ -61,8 +61,6 @@ ul.ck li{padding:6px 0 6px 26px;position:relative;border-bottom:1px dashed var(-
 ul.ck li:last-child{border:0}ul.ck li:before{content:"✓";position:absolute;left:2px;color:var(--gold2);font-weight:800}
 ol.rg{counter-reset:r}ol.rg li{counter-increment:r;padding:7px 0 7px 32px;position:relative}
 ol.rg li:before{content:counter(r);position:absolute;left:0;top:7px;width:22px;height:22px;border-radius:50%;background:var(--gold);color:#1a1206;font-size:.78rem;display:grid;place-items:center;font-weight:800}
-.ent{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ent div{padding:10px 12px;border:1px solid var(--bd);border-radius:12px;background:var(--card2);font-weight:600;font-size:.92rem}
 .foto-moto{display:block;width:100%;max-width:340px;height:auto;aspect-ratio:2/3;object-fit:cover;margin:14px auto 0;border-radius:14px;border:1px solid var(--gold)}
 .modal{position:fixed;inset:0;z-index:50;background:#000000e6;display:flex;align-items:center;justify-content:center;padding:16px}
 .modal img{max-width:100%;max-height:92vh;object-fit:contain;border-radius:10px}
@@ -88,6 +86,7 @@ ol.rg li:before{content:counter(r);position:absolute;left:0;top:7px;width:22px;h
       <div class="acts">
         <a class="cta hide" id="cta" target="_blank" rel="noopener">💬 Escolher meu número</a>
         <a class="cta alt" href="#numeros">Ver números</a>
+        <a class="cta alt" href="#infos">Detalhes e regras</a>
         <button type="button" class="cta alt" id="ver-moto">Ver moto</button>
       </div>
     </div>
@@ -120,21 +119,20 @@ ol.rg li:before{content:counter(r);position:absolute;left:0;top:7px;width:22px;h
     <div class="card kpi"><small>Total de números</small><b id="kt">–</b></div>
     <div class="card kpi"><small>Vendidos</small><b id="kv" style="color:var(--no)">–</b></div>
     <div class="card kpi"><small>Disponíveis</small><b id="kd" style="color:var(--ok)">–</b></div>
-    <div class="card kpi"><small>% vendido</small><b id="kp">–</b></div>
     <div class="card kpi"><small>Arrecadado</small><b id="ka">–</b></div>
     <div class="card kpi"><small>Ainda a arrecadar</small><b id="kr">–</b></div>
   </div>
 
-  <div class="two">
-    <div class="card"><h2>Andamento das vendas</h2><div class="big" id="bp">–</div><div class="bar"><i id="pb"></i></div><div class="sub" id="pt"></div></div>
-    <div class="card"><h2>Vendidos x Disponíveis</h2><div class="chart"><canvas id="pie"></canvas></div></div>
+  <div class="card prog" style="margin-top:14px">
+    <div><h2>Andamento das vendas</h2><div class="big" id="bp">–</div><div class="bar"><i id="pb"></i></div><div class="sub" id="pt"></div></div>
+    <div class="chart"><canvas id="pie"></canvas></div>
   </div>
 
   <div class="info" id="infos">
     <div class="card"><h2>🏍️ Sobre a moto</h2><ul class="ck" id="detalhes"></ul><img class="foto-moto" id="foto-moto" src="foto-moto.jpeg" width="1024" height="1536" alt="Foto da moto" loading="lazy" onerror="this.classList.add('hide')"></div>
-    <div class="col">
-      <div class="card hide" id="entrega-card"><h2>📍 Limite da entrega</h2><div class="ent" id="entrega"></div></div>
-      <div class="card" id="regras-card"><h2>📜 Regras do sorteio</h2><ol class="rg" id="regras"></ol><div class="fed" id="fed"></div></div>
+    <div class="card" id="regras-card"><h2>📜 Regras do sorteio</h2><ol class="rg" id="regras"></ol>
+      <div class="fed">📍 <b>Limite da entrega:</b> Belém e região, Moju e região, Bragança e região e Salinas e região.</div>
+      <div class="fed" id="fed"></div>
     </div>
   </div>
 
@@ -216,7 +214,6 @@ function render() {
 
   $("#kt").textContent = e.total.toLocaleString("pt-BR");
   $("#kv").textContent = e.vendidos; $("#kd").textContent = e.disponiveis;
-  $("#kp").textContent = pct(e.percVendido);
   $("#ka").textContent = brl(e.arrecadado); $("#kr").textContent = brl(e.aArrecadar);
   $("#bp").textContent = pct(e.percVendido);
   $("#pb").style.width = e.percVendido + "%";
@@ -230,9 +227,6 @@ function render() {
   $("#upd").classList.toggle("hide", !up); $("#upd").classList.toggle("old", !!(up && up.antigo));
   if (up) $("#upd span").innerHTML = `Dados atualizados em <b>${up.txt}</b> · ${up.rel}`;
   $("#upd2").textContent = up ? `Lista atualizada em ${up.txt} (${up.rel})` : "";
-  const lim = d.limitesEntrega || [];
-  $("#entrega-card").classList.toggle("hide", !lim.length);
-  $("#entrega").innerHTML = lim.map(t => `<div>📍 ${esc(t)}</div>`).join("");
 
   const labels = [`Vendidos (${pct(e.percVendido)})`, `Disponíveis (${pct(e.percDisponivel)})`];
   if (!chart) Chart.defaults.color = "#e6e2df";

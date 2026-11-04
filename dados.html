@@ -38,7 +38,7 @@ button:disabled{opacity:.5;cursor:default}
 
 <script>
 const $ = s => document.querySelector(s);
-const MAX = 999, pad = n => String(n).padStart(4, "0");
+const MAX = 1000, pad = n => String(n).padStart(4, "0");
 const quando = iso => iso ? new Date(iso).toLocaleString("pt-BR") : "nunca";
 let atual = [], novos = [];
 
@@ -50,7 +50,7 @@ async function carregarAtual() {
     return true;
   } catch { $("#ult").textContent = "Não consegui ler a lista atual."; return false; }
 }
-// 4 dígitos, 0001..0999, sem repetir, em ordem (mesma regra do atualizar.py)
+// 4 dígitos, 0001..1000, sem repetir, em ordem (mesma regra do atualizar.py)
 function extrair(t) {
   const s = new Set();
   for (const m of t.matchAll(/(?<!\d)\d{4}(?!\d)/g)) { const n = +m[0]; if (n >= 1 && n <= MAX) s.add(n); }
@@ -59,7 +59,7 @@ function extrair(t) {
 $("#processar").onclick = async () => {
   novos = extrair($("#txt").value);
   $("#status").textContent = "";
-  if (!novos.length) { alert("Nenhum número de 4 dígitos (0001–0999) encontrado."); $("#previa").classList.add("hide"); return; }
+  if (!novos.length) { alert("Nenhum número de 4 dígitos (0001–1000) encontrado."); $("#previa").classList.add("hide"); return; }
   if (!await carregarAtual()) return;
   const setN = new Set(novos), setA = new Set(atual);
   const vendidos = atual.filter(x => !setN.has(x)), liberados = novos.filter(x => !setA.has(x));
