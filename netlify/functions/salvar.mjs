@@ -3,8 +3,9 @@ import { getStore } from "@netlify/blobs";
 
 // Dados fixos: mantenha igual ao PADRAO do atualizar.py.
 const PADRAO = {
+  nome: "Sorteio Mais que Vencedores",
   premio: "Yamaha Fazer 250cc 2025/2025",
-  totalNumeros: 999,
+  totalNumeros: 1000,
   valorNumero: 50,
   dataSorteio: "2026-12-20",
   atualizadoEm: null,
@@ -20,6 +21,7 @@ const PADRAO = {
       "Cor: branca",
     ],
   },
+  limitesEntrega: ["Belém e região", "Moju e região", "Bragança e região", "Salinas e região"],
   loteria: { nome: "Loteria Federal", digitos: 3 },
   regras: [
     "Números só serão confirmados mediante a comprovação do pagamento.",

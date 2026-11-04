@@ -3,63 +3,73 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#15803d">
-<title>Sorteio</title>
+<meta name="theme-color" content="#0c0a07">
+<title>Sorteio Mais que Vencedores</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-:root{--bg:#f3f5f9;--card:#fff;--tx:#18202c;--mut:#667386;--ok:#16a34a;--okb:#dcfce7;--no:#dc2626;--nob:#fee2e2;--pri:#15803d;--bd:#e3e8ef;--sh:0 2px 10px #1b233012}
-@media(prefers-color-scheme:dark){:root{--bg:#0e131a;--card:#171f2a;--tx:#e8edf4;--mut:#93a0b2;--okb:#11351f;--nob:#3b1818;--bd:#263244;--sh:none}}
+:root{color-scheme:dark;--bg:#0c0a07;--card:#15120d;--card2:#1c170f;--tx:#e6e2df;--mut:#a8a095;--gold:#c48d33;--gold2:#deae57;--ok:#4ade80;--okb:#10281a;--no:#f87171;--nob:#321616;--bd:#2f2619;--sh:0 4px 18px #00000066}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--tx);line-height:1.45}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(900px 420px at 50% -140px,#c48d3330,transparent) no-repeat,var(--bg);color:var(--tx);line-height:1.45}
 .w{max-width:1080px;margin:auto;padding:14px}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:16px;box-shadow:var(--sh)}
-h2{font-size:1.05rem;margin:0 0 10px}
+h2{font-size:1.05rem;margin:0 0 10px;color:var(--gold2)}
 .sub{color:var(--mut);font-size:.85rem}
 /* hero */
-.hero{display:grid;gap:16px;background:linear-gradient(135deg,#14532d,#15803d 55%,#22c55e);color:#fff;border:0;border-radius:22px;padding:20px}
-.hero img{width:100%;max-height:260px;object-fit:cover;border-radius:14px}
-.tag{display:inline-block;font-size:.72rem;letter-spacing:.08em;background:#ffffff26;border-radius:99px;padding:3px 10px}
-.hero h1{margin:8px 0 10px;font-size:1.7rem;line-height:1.15}
+.hero{display:grid;gap:18px;background:linear-gradient(145deg,#1f1810,#0c0a07 72%);border:1px solid var(--gold);border-radius:22px;padding:22px;box-shadow:0 0 0 1px #c48d3322,var(--sh)}
+.hero img{width:100%;max-height:300px;object-fit:cover;border-radius:14px;border:1px solid var(--gold)}
+.tag{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.14em;color:#1a1206;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;padding:4px 12px}
+.hero h1{margin:12px 0 4px;font-size:clamp(2rem,8.5vw,3.3rem);line-height:1.02;font-weight:900;text-transform:uppercase;background:linear-gradient(180deg,#f3d08c,var(--gold2) 45%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.premio{font-size:1.15rem;font-weight:700;color:var(--tx);margin-bottom:14px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{background:#ffffff22;border-radius:12px;padding:6px 11px;font-size:.88rem}.chip b{font-weight:700}
-.cta{display:inline-block;margin-top:14px;background:#fff;color:#14532d;font-weight:700;text-decoration:none;padding:11px 18px;border-radius:12px}
-.cta.alt{background:transparent;color:#fff;border:1px solid #ffffff80;margin-left:6px}
+.chip{background:#c48d3320;border:1px solid #c48d3350;border-radius:12px;padding:6px 11px;font-size:.88rem}.chip b{font-weight:700;color:var(--gold2)}
+.upd{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:7px 13px;border-radius:99px;background:#4ade8016;border:1px solid #4ade8055;font-size:.85rem}
+.upd i{width:9px;height:9px;border-radius:50%;background:var(--ok);animation:pl 2s infinite}
+.upd.old{background:#c48d3322;border-color:#c48d3377}.upd.old i{background:var(--gold2);animation:none}
+@keyframes pl{0%{box-shadow:0 0 0 0 #4ade80aa}70%,100%{box-shadow:0 0 0 8px #4ade8000}}
+#alerta{margin-top:12px;font-weight:700;color:var(--gold2)}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.cta{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a1206;font-weight:800;text-decoration:none;padding:11px 18px;border-radius:12px;border:1px solid transparent}
+.cta.alt{background:transparent;color:var(--gold2);border-color:var(--gold)}
 button.cta{font:inherit;font-weight:700;cursor:pointer}
-#alerta{margin-top:12px;font-weight:600}
-@media(min-width:760px){.hero.img{grid-template-columns:1.2fr 1fr;align-items:center}.hero h1{font-size:2.1rem}}
+@media(min-width:760px){.hero.img{grid-template-columns:1.2fr 1fr;align-items:center}}
 /* kpis */
 .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}
 .kpi small{color:var(--mut);display:block;font-size:.8rem}.kpi b{font-size:1.35rem}
-@media(min-width:760px){.kpis{grid-template-columns:repeat(3,1fr)}.two{grid-template-columns:1fr 1fr!important}.kpi b{font-size:1.6rem}}
-.two{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:760px){.kpis{grid-template-columns:repeat(3,1fr)}.two,.info{grid-template-columns:1fr 1fr!important}.kpi b{font-size:1.6rem}}
+.two,.info{display:grid;grid-template-columns:1fr;gap:10px}
+.info{gap:14px;margin-top:14px}.col{display:grid;gap:14px;align-content:start}
 .bar{height:20px;background:var(--bd);border-radius:99px;overflow:hidden;margin:14px 0 8px}
-.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ok),#4ade80);border-radius:99px;transition:width .8s}
-.big{font-size:2.2rem;font-weight:800}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;transition:width .8s}
+.big{font-size:2.2rem;font-weight:800;color:var(--gold2)}
 .chart{max-width:260px;margin:auto}
 /* grid */
 .tools{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
 input[type=search]{font:inherit;flex:1;min-width:150px;padding:10px 12px;border-radius:12px;border:1px solid var(--bd);background:var(--bg);color:var(--tx)}
+input[type=search]:focus{outline:1px solid var(--gold);border-color:var(--gold)}
 .seg{display:flex;gap:6px;flex-wrap:wrap}
 .seg button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:99px;padding:7px 13px;font-size:.88rem}
-.seg button.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.seg button.on{background:var(--gold);color:#1a1206;border-color:var(--gold);font-weight:700}
 .legend{display:flex;gap:14px;font-size:.82rem;color:var(--mut);margin:4px 0 10px}
 .dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:baseline}
-#res{margin:8px 0;padding:10px 12px;border-radius:12px;font-weight:600;background:var(--bg)}
+#res{margin:8px 0;padding:10px 12px;border-radius:12px;font-weight:600;background:var(--bg);border:1px solid var(--bd)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:6px}
 .n{padding:9px 0;text-align:center;border-radius:10px;font-weight:600;font-size:.85rem;background:var(--okb);color:var(--ok);font-variant-numeric:tabular-nums}
 .n.v{background:var(--nob);color:var(--no);text-decoration:line-through;text-decoration-thickness:1px;opacity:.85}
 /* info */
 ul.ck,ol.rg{margin:0;padding:0;list-style:none}
 ul.ck li{padding:6px 0 6px 26px;position:relative;border-bottom:1px dashed var(--bd)}
-ul.ck li:last-child{border:0}ul.ck li:before{content:"✓";position:absolute;left:2px;color:var(--ok);font-weight:800}
+ul.ck li:last-child{border:0}ul.ck li:before{content:"✓";position:absolute;left:2px;color:var(--gold2);font-weight:800}
 ol.rg{counter-reset:r}ol.rg li{counter-increment:r;padding:7px 0 7px 32px;position:relative}
-ol.rg li:before{content:counter(r);position:absolute;left:0;top:7px;width:22px;height:22px;border-radius:50%;background:var(--pri);color:#fff;font-size:.78rem;display:grid;place-items:center;font-weight:700}
-.foto-moto{display:block;width:100%;max-width:340px;height:auto;aspect-ratio:2/3;object-fit:cover;margin:14px auto 0;border-radius:14px}
-.modal{position:fixed;inset:0;z-index:50;background:#000000d9;display:flex;align-items:center;justify-content:center;padding:16px}
+ol.rg li:before{content:counter(r);position:absolute;left:0;top:7px;width:22px;height:22px;border-radius:50%;background:var(--gold);color:#1a1206;font-size:.78rem;display:grid;place-items:center;font-weight:800}
+.ent{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ent div{padding:10px 12px;border:1px solid var(--bd);border-radius:12px;background:var(--card2);font-weight:600;font-size:.92rem}
+.foto-moto{display:block;width:100%;max-width:340px;height:auto;aspect-ratio:2/3;object-fit:cover;margin:14px auto 0;border-radius:14px;border:1px solid var(--gold)}
+.modal{position:fixed;inset:0;z-index:50;background:#000000e6;display:flex;align-items:center;justify-content:center;padding:16px}
 .modal img{max-width:100%;max-height:92vh;object-fit:contain;border-radius:10px}
 .modal .x{position:absolute;top:12px;right:12px;width:42px;height:42px;border-radius:50%;border:0;background:#ffffff26;color:#fff;font-size:1.3rem;cursor:pointer}
-.fed{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--bg);font-size:.9rem}
-footer{text-align:center;margin:18px 0 6px}
+.fed{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--bg);border:1px solid var(--bd);font-size:.9rem}
+.foot{text-align:center;margin:22px 0 8px;padding-top:14px;border-top:1px solid var(--bd);font-size:.85rem;color:var(--mut)}
+.foot b{color:var(--gold2)}
 .hide{display:none!important}
 #err{margin-top:14px;border-color:var(--no)}
 </style>
@@ -70,10 +80,16 @@ footer{text-align:center;margin:18px 0 6px}
   <section class="hero" id="hero">
     <div>
       <span class="tag">SORTEIO</span>
-      <h1 id="premio">Carregando…</h1>
+      <h1 id="nome">Sorteio Mais que Vencedores</h1>
+      <div class="premio" id="premio">Carregando…</div>
       <div class="chips" id="chips-hero"></div>
+      <div class="upd old" id="upd"><i></i><span>Carregando atualização…</span></div>
       <div id="alerta"></div>
-      <a class="cta hide" id="cta" target="_blank" rel="noopener">💬 Escolher meu número</a><a class="cta alt" href="#numeros">Ver números</a><button type="button" class="cta alt" id="ver-moto">Ver moto</button>
+      <div class="acts">
+        <a class="cta hide" id="cta" target="_blank" rel="noopener">💬 Escolher meu número</a>
+        <a class="cta alt" href="#numeros">Ver números</a>
+        <button type="button" class="cta alt" id="ver-moto">Ver moto</button>
+      </div>
     </div>
     <img id="foto" class="hide" alt="Foto do prêmio">
   </section>
@@ -83,6 +99,22 @@ footer{text-align:center;margin:18px 0 6px}
     <p class="sub">Confirme que ele está na mesma pasta do index.html. Se estiver abrindo o arquivo direto do computador (file://), o navegador bloqueia a leitura: selecione o arquivo abaixo (no Netlify isso não acontece).</p>
     <input type="file" id="file" accept=".json,application/json">
   </div>
+
+  <section class="card" id="numeros" style="margin-top:14px">
+    <h2>Escolha seu número</h2>
+    <div class="sub" id="upd2"></div>
+    <div class="tools">
+      <input id="q" type="search" inputmode="numeric" maxlength="4" placeholder="Buscar número (ex: 0123)">
+      <div class="seg" id="seg">
+        <button data-f="all" class="on">Todos (<span id="ca">0</span>)</button>
+        <button data-f="d">Disponíveis (<span id="cd">0</span>)</button>
+        <button data-f="v">Vendidos (<span id="cv">0</span>)</button>
+      </div>
+    </div>
+    <div class="legend"><span><i class="dot" style="background:var(--ok)"></i>Disponível</span><span><i class="dot" style="background:var(--no)"></i>Vendido</span></div>
+    <div id="res" class="hide"></div>
+    <div id="grid" class="grid"></div>
+  </section>
 
   <div class="kpis">
     <div class="card kpi"><small>Total de números</small><b id="kt">–</b></div>
@@ -98,27 +130,15 @@ footer{text-align:center;margin:18px 0 6px}
     <div class="card"><h2>Vendidos x Disponíveis</h2><div class="chart"><canvas id="pie"></canvas></div></div>
   </div>
 
-  <section class="card" id="numeros" style="margin-top:14px">
-    <h2>Números</h2>
-    <div class="tools">
-      <input id="q" type="search" inputmode="numeric" maxlength="4" placeholder="Buscar número (ex: 0123)">
-      <div class="seg" id="seg">
-        <button data-f="all" class="on">Todos (<span id="ca">0</span>)</button>
-        <button data-f="d">Disponíveis (<span id="cd">0</span>)</button>
-        <button data-f="v">Vendidos (<span id="cv">0</span>)</button>
-      </div>
-    </div>
-    <div class="legend"><span><i class="dot" style="background:var(--ok)"></i>Disponível</span><span><i class="dot" style="background:var(--no)"></i>Vendido</span></div>
-    <div id="res" class="hide"></div>
-    <div id="grid" class="grid"></div>
-  </section>
-
-  <div class="two" style="margin-top:14px" id="infos">
+  <div class="info" id="infos">
     <div class="card"><h2>🏍️ Sobre a moto</h2><ul class="ck" id="detalhes"></ul><img class="foto-moto" id="foto-moto" src="foto-moto.jpeg" width="1024" height="1536" alt="Foto da moto" loading="lazy" onerror="this.classList.add('hide')"></div>
-    <div class="card" id="regras-card"><h2>🔴 Regras do sorteio</h2><ol class="rg" id="regras"></ol><div class="fed" id="fed"></div></div>
+    <div class="col">
+      <div class="card hide" id="entrega-card"><h2>📍 Limite da entrega</h2><div class="ent" id="entrega"></div></div>
+      <div class="card" id="regras-card"><h2>📜 Regras do sorteio</h2><ol class="rg" id="regras"></ol><div class="fed" id="fed"></div></div>
+    </div>
   </div>
 
-  <footer class="sub" id="foot"></footer>
+  <footer class="foot">Site criado e desenvolvido por <b>Israel Silva</b> e <b>Claude Code Sonnet 5.5</b>.</footer>
 </div>
 
 <div class="modal hide" id="modal" role="dialog" aria-modal="true" aria-label="Foto da moto">
@@ -161,13 +181,23 @@ function diasParaSorteio(iso) {
 }
 const dataBR = iso => iso.split("-").reverse().join("/");
 // Número da Loteria Federal equivalente (ex.: 1000 -> "000" com 3 dígitos)
+// "Atualizado em 03/11/2026 às 23:13 · há 5 h"
+function atualizacao(iso) {
+  const t = new Date(iso); if (!iso || isNaN(t)) return null;
+  const min = Math.max(0, Math.round((Date.now() - t) / 60000));
+  const rel = min < 1 ? "agora" : min < 60 ? `há ${min} min` : min < 1440 ? `há ${Math.floor(min / 60)} h` : `há ${Math.floor(min / 1440)} dia(s)`;
+  const txt = `${t.toLocaleDateString("pt-BR")} às ${t.toLocaleTimeString("pt-BR", {hour:"2-digit", minute:"2-digit"})}`;
+  return {txt, rel, antigo: min > 1440};
+}
 function numeroFederal(n, digitos) { return String(n % 10 ** digitos).padStart(digitos, "0"); }
 
 // ---------- Renderização ----------
 function render() {
   const d = dados, e = estatisticas(d), disp = setDisponiveis(d);
   const dg = (d.loteria && d.loteria.digitos) || 3;
-  document.title = "Sorteio – " + d.premio;
+  const nome = d.nome || "Sorteio";
+  document.title = nome + " – " + d.premio;
+  $("#nome").textContent = nome;
   $("#premio").textContent = d.premio;
 
   const dias = diasParaSorteio(d.dataSorteio);
@@ -196,10 +226,17 @@ function render() {
   $("#detalhes").innerHTML = ((d.moto && d.moto.detalhes) || []).map(t => `<li>${esc(t)}</li>`).join("");
   $("#regras").innerHTML = (d.regras || []).map(t => `<li>${esc(t)}</li>`).join("");
   $("#fed").innerHTML = `🎰 <b>${esc((d.loteria && d.loteria.nome) || "Loteria Federal")}</b>: valem os ${dg} últimos dígitos do 1º prêmio. Ex.: o número <b>${e.total}</b> vale como <b>${numeroFederal(e.total, dg)}</b>.`;
-  $("#foot").textContent = d.atualizadoEm ? "Lista de números atualizada em " + new Date(d.atualizadoEm).toLocaleString("pt-BR") : "";
+  const up = atualizacao(d.atualizadoEm);
+  $("#upd").classList.toggle("hide", !up); $("#upd").classList.toggle("old", !!(up && up.antigo));
+  if (up) $("#upd span").innerHTML = `Dados atualizados em <b>${up.txt}</b> · ${up.rel}`;
+  $("#upd2").textContent = up ? `Lista atualizada em ${up.txt} (${up.rel})` : "";
+  const lim = d.limitesEntrega || [];
+  $("#entrega-card").classList.toggle("hide", !lim.length);
+  $("#entrega").innerHTML = lim.map(t => `<div>📍 ${esc(t)}</div>`).join("");
 
   const labels = [`Vendidos (${pct(e.percVendido)})`, `Disponíveis (${pct(e.percDisponivel)})`];
-  if (!chart) chart = new Chart($("#pie"), {type:"doughnut", data:{labels, datasets:[{data:[e.vendidos, e.disponiveis], backgroundColor:["#dc2626","#16a34a"], borderWidth:0}]}, options:{cutout:"62%", plugins:{legend:{position:"bottom"}}}});
+  if (!chart) Chart.defaults.color = "#e6e2df";
+  if (!chart) chart = new Chart($("#pie"), {type:"doughnut", data:{labels, datasets:[{data:[e.vendidos, e.disponiveis], backgroundColor:["#ef4444","#22c55e"], borderWidth:0}]}, options:{cutout:"62%", plugins:{legend:{position:"bottom"}}}});
   else { chart.data.labels = labels; chart.data.datasets[0].data = [e.vendidos, e.disponiveis]; chart.update(); }
   grade(disp);
 }

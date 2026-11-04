@@ -1,5 +1,6 @@
 {
   "premio": "Yamaha Fazer 250cc 2025/2025",
+  "nome": "Sorteio Mais que Vencedores",
   "totalNumeros": 1000,
   "valorNumero": 50,
   "dataSorteio": "2026-12-20",
@@ -19,6 +20,12 @@
       "Cor: branca"
     ]
   },
+  "limitesEntrega": [
+    "Belém e região",
+    "Moju e região",
+    "Bragança e região",
+    "Salinas e região"
+  ],
   "loteria": {
     "nome": "Loteria Federal",
     "digitos": 3
