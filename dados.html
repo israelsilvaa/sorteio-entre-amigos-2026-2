@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Atualizar números</title>
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--tx:#18202c;--mut:#667386;--ok:#16a34a;--no:#dc2626;--pri:#15803d;--bd:#e3e8ef}
+@media(prefers-color-scheme:dark){:root{--bg:#0e131a;--card:#171f2a;--tx:#e8edf4;--mut:#93a0b2;--bd:#263244}}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--tx);line-height:1.45}
+.w{max-width:720px;margin:auto;padding:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:12px}
+h1{font-size:1.25rem;margin:4px 0 4px}.sub{color:var(--mut);font-size:.88rem}
+textarea{font:inherit;width:100%;min-height:170px;padding:10px;border-radius:12px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);resize:vertical;margin-top:10px}
+button{font:inherit;font-weight:600;cursor:pointer;border:0;border-radius:12px;padding:11px 16px;background:var(--pri);color:#fff;margin-top:10px}
+button:disabled{opacity:.5;cursor:default}
+.lst{font-variant-numeric:tabular-nums;word-break:break-word;color:var(--mut);font-size:.9rem;margin:4px 0 12px}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<div class="w">
+  <h1>Atualizar números</h1>
+  <div class="sub" id="ult">Carregando última atualização…</div>
+
+  <div class="card">
+    <textarea id="txt" placeholder="Cole aqui a mensagem do WhatsApp…"></textarea>
+    <button id="processar">Processar</button>
+  </div>
+
+  <div class="card hide" id="previa">
+    <div id="resumo"></div>
+    <button id="atualizar">Atualizar dados</button>
+    <div id="status" style="margin-top:10px;font-weight:600"></div>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const MAX = 999, pad = n => String(n).padStart(4, "0");
+const quando = iso => iso ? new Date(iso).toLocaleString("pt-BR") : "nunca";
+let atual = [], novos = [];
+
+async function carregarAtual() {
+  try {
+    const d = await (await fetch("/dados.json?t=" + Date.now(), {cache:"no-store"})).json();
+    atual = d.disponiveis.filter(x => +x >= 1 && +x <= MAX);
+    $("#ult").textContent = "Última atualização: " + quando(d.atualizadoEm) + " · " + atual.length + " disponíveis";
+    return true;
+  } catch { $("#ult").textContent = "Não consegui ler a lista atual."; return false; }
+}
+// 4 dígitos, 0001..0999, sem repetir, em ordem (mesma regra do atualizar.py)
+function extrair(t) {
+  const s = new Set();
+  for (const m of t.matchAll(/(?<!\d)\d{4}(?!\d)/g)) { const n = +m[0]; if (n >= 1 && n <= MAX) s.add(n); }
+  return [...s].sort((a, b) => a - b).map(pad);
+}
+$("#processar").onclick = async () => {
+  novos = extrair($("#txt").value);
+  $("#status").textContent = "";
+  if (!novos.length) { alert("Nenhum número de 4 dígitos (0001–0999) encontrado."); $("#previa").classList.add("hide"); return; }
+  if (!await carregarAtual()) return;
+  const setN = new Set(novos), setA = new Set(atual);
+  const vendidos = atual.filter(x => !setN.has(x)), liberados = novos.filter(x => !setA.has(x));
+  let h = `<b>${novos.length}</b> disponíveis · <b>${MAX - novos.length}</b> vendidos na nova lista.<br><br>`;
+  if (!vendidos.length && !liberados.length) h += "✅ Nada mudou em relação à lista atual.";
+  else {
+    h += `🔴 <b>${vendidos.length}</b> marcados como vendidos` + (vendidos.length ? `<div class="lst">${vendidos.join(", ")}</div>` : "<br>");
+    if (liberados.length) h += `🟢 <b>${liberados.length}</b> voltaram a ficar disponíveis<div class="lst">${liberados.join(", ")}</div>`;
+  }
+  $("#resumo").innerHTML = h;
+  $("#atualizar").classList.toggle("hide", !vendidos.length && !liberados.length);
+  $("#previa").classList.remove("hide");
+};
+$("#atualizar").onclick = async () => {
+  $("#atualizar").disabled = true; $("#status").textContent = "Atualizando…";
+  try {
+    const r = await fetch("/.netlify/functions/salvar", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({disponiveis:novos})});
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error || "Erro " + r.status);
+    $("#status").textContent = "✅ Dados atualizados.";
+    $("#atualizar").classList.add("hide");
+    await carregarAtual();
+  } catch (e) { $("#status").textContent = "❌ " + e.message; }
+  $("#atualizar").disabled = false;
+};
+carregarAtual();
+</script>
+</body>
+</html>

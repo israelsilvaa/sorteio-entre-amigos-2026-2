@@ -1,0 +1,12 @@
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+
+# O site público continua pedindo "dados.json"; ele passa a ser servido pela função (Netlify Blobs).
+[[redirects]]
+  from = "/dados.json"
+  to = "/.netlify/functions/dados"
+  status = 200
+  force = true
