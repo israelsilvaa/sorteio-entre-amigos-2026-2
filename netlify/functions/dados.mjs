@@ -11,6 +11,8 @@ export default async (req) => {
       if (!r.ok) throw new Error("dados-inicial.json não encontrado");
       body = await r.text();
     }
+    // Normaliza: o total é sempre 1000 (0001..1000), mesmo que o blob antigo tenha outro valor.
+    try { const o = JSON.parse(body); o.totalNumeros = 1000; body = JSON.stringify(o); } catch {}
     return new Response(body, { headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } });
   } catch (e) {
     console.error(e);
