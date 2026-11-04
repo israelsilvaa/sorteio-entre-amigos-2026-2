@@ -77,7 +77,6 @@ ol.rg li:before{content:counter(r);position:absolute;left:0;top:7px;width:22px;h
 
   <section class="hero" id="hero">
     <div>
-      <span class="tag">SORTEIO</span>
       <h1 id="nome">Sorteio Mais que Vencedores</h1>
       <div class="premio" id="premio">Carregando…</div>
       <div class="chips" id="chips-hero"></div>
@@ -193,7 +192,7 @@ function numeroFederal(n, digitos) { return String(n % 10 ** digitos).padStart(d
 function render() {
   const d = dados, e = estatisticas(d), disp = setDisponiveis(d);
   const dg = (d.loteria && d.loteria.digitos) || 3;
-  const nome = d.nome || "Sorteio";
+  const nome = d.nome || "Sorteio Mais que Vencedores";
   document.title = nome + " – " + d.premio;
   $("#nome").textContent = nome;
   $("#premio").textContent = d.premio;
