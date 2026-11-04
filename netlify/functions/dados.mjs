@@ -7,8 +7,8 @@ export default async (req) => {
     const store = getStore({ name: "sorteio", consistency: "strong" });
     let body = await store.get("dados");
     if (!body) {
-      const r = await fetch(new URL("/dados.json", req.url));
-      if (!r.ok) throw new Error("dados.json não encontrado");
+      const r = await fetch(new URL("/dados-inicial.json", req.url));
+      if (!r.ok) throw new Error("dados-inicial.json não encontrado");
       body = await r.text();
     }
     return new Response(body, { headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } });

@@ -4,7 +4,7 @@ import { getStore } from "@netlify/blobs";
 // Dados fixos: mantenha igual ao PADRAO do atualizar.py.
 const PADRAO = {
   premio: "Yamaha Fazer 250cc 2025/2025",
-  totalNumeros: 1000,
+  totalNumeros: 999,
   valorNumero: 50,
   dataSorteio: "2026-12-20",
   atualizadoEm: null,
@@ -45,7 +45,7 @@ export default async (req) => {
     const store = getStore({ name: "sorteio", consistency: "strong" });
     let atual = null;
     try { atual = JSON.parse(await store.get("dados")); } catch {}
-    if (!atual) { try { atual = await (await fetch(new URL("/dados.json", req.url))).json(); } catch {} }
+    if (!atual) { try { atual = await (await fetch(new URL("/dados-inicial.json", req.url))).json(); } catch {} }
 
     const dados = structuredClone(PADRAO);
     dados.moto.imagem = atual?.moto?.imagem ?? null; // preserva a imagem cadastrada
