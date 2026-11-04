@@ -4,7 +4,7 @@ import { getStore } from "@netlify/blobs";
 // Dados fixos: mantenha igual ao PADRAO do atualizar.py.
 const PADRAO = {
   premio: "Yamaha Fazer 250cc 2025/2025",
-  totalNumeros: 999,
+  totalNumeros: 1000,
   valorNumero: 50,
   dataSorteio: "2026-12-20",
   atualizadoEm: null,
